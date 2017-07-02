@@ -1,0 +1,36 @@
+.antd-header {
+    background-color: #222;
+    height: 64px;
+    padding: 0;
+    text-align: center;    
+}
+
+.antd-header-h1 {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+.antd-content {
+    margin: 24px 16px 0
+}
+.antd-content-div {
+    padding: 24; 
+    background: #fff; 
+    min-height: 650px;
+    line-height: 50px;
+}
+
+.antd-footer {
+    text-align: center;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 30px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
