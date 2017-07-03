@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import LogoIcon from './logo.svg';
 import './App.css';
 import {
@@ -11,7 +11,7 @@ import {
     Table,
 } from 'antd'
 
-const {Header, Content, Footer} = Layout
+const { Header, Content, Footer } = Layout
 
 class App extends Component {
     //构造函数，在创建组件的时候调用一次。
@@ -38,7 +38,7 @@ class App extends Component {
     render() {
         const name = "关键词检索GitHub最受欢迎项目"
         const suffix = this.state.inputStr
-            ? <Icon type="close-circle" onClick={this.emitEmpty}/>
+            ? <Icon type="close-circle" onClick={this.emitEmpty} />
             : null
 
         // name : "freeCodeCamp", stargazers_count : 290905, forks_count : 12323,
@@ -57,7 +57,12 @@ class App extends Component {
                 title: '项目名',
                 dataIndex: 'name',
                 key: 'name',
-                width: '30%'
+                width: '30%',
+                render: (text, record) => (
+                    <span>
+                        <a href={record.html_url} target="_blank">{record.name}</a>
+                    </span>
+                ),
             }, {
                 title: 'star数',
                 dataIndex: 'stargazers_count',
@@ -89,7 +94,7 @@ class App extends Component {
                 <div>
                     <p>创建时间: {data.created_at}</p>
                     <p>最近更新时间: {data.updated_at}</p>
-                    <p>项目地址: {data.html_url}</p>
+                    <p>项目地址: <a href={data.html_url} target="_blank">{data.html_url}</a></p>
                     <p>项目描述: {data.description}</p>
                 </div>
             );
@@ -97,7 +102,7 @@ class App extends Component {
         return (
             <Layout>
                 <Header className="antd-header">
-                    <img src={LogoIcon} className="App-logo" alt="logo"/>
+                    <img src={LogoIcon} className="App-logo" alt="logo" />
                     <span className="antd-header-h1">{name}</span>
                 </Header>
                 <Content className="antd-content">
@@ -107,18 +112,18 @@ class App extends Component {
                                 xs={9}
                                 sm={4}
                                 style={{
-                                textAlign: "center"
-                            }}>请输入查找关键词:</Col>
+                                    textAlign: "center"
+                                }}>请输入查找关键词:</Col>
                             <Col span={8}>
                                 <Input
                                     type="text"
                                     placeholder="输入关键词"
-                                    prefix={< Icon type = "search" />}
+                                    prefix={< Icon type="search" />}
                                     onChange={this.onChangeInputForm}
                                     ref={node => this.inputForm = node}
                                     suffix={suffix}
                                     value={this.state.inputStr}
-                                    onPressEnter={this.onClickSearch}/>
+                                    onPressEnter={this.onClickSearch} />
                             </Col>
                             <Col xs={6} sm={3}>
                                 <Button
@@ -148,7 +153,7 @@ class App extends Component {
                                 columns={columns}
                                 rowKey="id"
                                 expandedRowRender={record => expandedRowRender(record)}
-                                loading={this.state.contentLoading}/></Col>
+                                loading={this.state.contentLoading} /></Col>
                         </Row>
                     </div>
                 </Content>
@@ -167,20 +172,20 @@ class App extends Component {
         this
             .inputForm
             .focus();
-        this.setState({inputStr: ''});
+        this.setState({ inputStr: '' });
     }
     onChangeInputForm = (e) => {
-        this.setState({inputStr: e.target.value});
+        this.setState({ inputStr: e.target.value });
     }
     onClickSearch = () => {
-        this.setState({iconLoading: true, contentLoading: true});
+        this.setState({ iconLoading: true, contentLoading: true });
         fetch(`https://api.github.com/search/repositories?q=${this.state.inputStr}&sort=stars`).then(function (response) {
             console.log('json fetch success!')
             return response.json()
         }).then(value => {
-            this.setState({contentLoading: false, iconLoading: false, data: value.items, total_count: value.total_count})
+            this.setState({ contentLoading: false, iconLoading: false, data: value.items, total_count: value.total_count })
         }).catch(err => {
-            this.setState({loading: false, error: err})
+            this.setState({ loading: false, error: err })
             console.log('json fetch failed', err)
         })
     }
