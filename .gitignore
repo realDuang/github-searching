@@ -1,0 +1,3 @@
+*.pem
+.git/
+.vscode/
