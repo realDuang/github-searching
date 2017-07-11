@@ -12,6 +12,9 @@ git clone https://github.com/kelekexiao123/github-searching.git
 # install yarn
 npm install -g yarn
 
+# if you have not installed webpack-dev-server, install it
+yarn add webpack-dev-server
+
 # install dependencies and serve with hot reload at localhost:3000
 yarn start
 
